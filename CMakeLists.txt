@@ -33,3 +33,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 ## Declare a cpp library
 add_library(MultiSenseSLPlugin2 src/MultiSenseSLPlugin.cpp)
 #target_link_libraries(MultiSenseSLPlugin2 ${catkin_LIBRARIES})
+
+install(TARGETS MultiSenseSLPlugin2
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+    )
