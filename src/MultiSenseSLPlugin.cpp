@@ -161,7 +161,9 @@ void MultiSenseSL::LoadThread()
   // publish multi queue
   this->pmq->startServiceThread();
 
-  int atlasVersion;
+
+  this->rosNamespace = "/multisense";
+  /**int atlasVersion; BULLSHIT
   this->rosnode_->getParam("/atlas_version", atlasVersion);
   if (atlasVersion == 1)
   {
@@ -178,7 +180,7 @@ void MultiSenseSL::LoadThread()
     ROS_WARN(
         "/atlas_version not specified (1, 3, 4, or 5), assuming atlas v1.");
     this->rosNamespace = "/multisense_sl";
-  }
+  }**/
 
   // ros publications
   // publish joint states for tf (robot state publisher)
