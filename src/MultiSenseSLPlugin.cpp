@@ -100,7 +100,9 @@ void MultiSenseSL::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     gzerr << "head_imu_sensor not found\n" << "\n";
 
   // \todo: add ros topic / service to reset imu (imuReferencePose, etc.)
-  this->spindleLink = this->atlasModel->GetLink("hokuyo_link");
+  //this->spindleLink = this->atlasModel->GetLink("hokuyo_link");
+  //spindle link is always the child of "hokuyo_joint", then:
+  this->spindleLink = this->atlasModel->GetJoint("hokuyo_joint")->GetChild();
   if (!this->spindleLink)
   {
     gzerr << "spindle link not found, plugin will stop loading\n";
