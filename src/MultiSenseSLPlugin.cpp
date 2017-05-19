@@ -94,7 +94,7 @@ void MultiSenseSL::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
 
   // Get sensors
   this->imuSensor =
-    boost::dynamic_pointer_cast<sensors::ImuSensor>
+    std::dynamic_pointer_cast<sensors::ImuSensor>
       (sensors::SensorManager::Instance()->GetSensor("head_imu_sensor"));
   if (!this->imuSensor)
     gzerr << "head_imu_sensor not found\n" << "\n";
@@ -126,7 +126,7 @@ void MultiSenseSL::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
   //   gzerr << (*siter)->GetName() << "\n";
 
   this->multiCameraSensor =
-    boost::dynamic_pointer_cast<sensors::MultiCameraSensor>(
+    std::dynamic_pointer_cast<sensors::MultiCameraSensor>(
     sensors::SensorManager::Instance()->GetSensor("stereo_camera"));
   if (!this->multiCameraSensor)
     gzerr << "multicamera sensor not found\n";
@@ -299,7 +299,7 @@ void MultiSenseSL::UpdateStates()
 
     // compute angular rates
     {
-      math::Vector3 wLocal = this->imuSensor->GetAngularVelocity();
+      math::Vector3 wLocal = this->imuSensor->AngularVelocity();
       imuMsg.angular_velocity.x = wLocal.x;
       imuMsg.angular_velocity.y = wLocal.y;
       imuMsg.angular_velocity.z = wLocal.z;
@@ -307,7 +307,7 @@ void MultiSenseSL::UpdateStates()
 
     // compute acceleration
     {
-      math::Vector3 accel = this->imuSensor->GetLinearAcceleration();
+      math::Vector3 accel = this->imuSensor->LinearAcceleration();
       imuMsg.linear_acceleration.x = accel.x;
       imuMsg.linear_acceleration.y = accel.y;
       imuMsg.linear_acceleration.z = accel.z;
@@ -316,7 +316,7 @@ void MultiSenseSL::UpdateStates()
     // compute orientation
     {
       math::Quaternion imuRot =
-        this->imuSensor->GetOrientation();
+        this->imuSensor->Orientation();
       imuMsg.orientation.x = imuRot.x;
       imuMsg.orientation.y = imuRot.y;
       imuMsg.orientation.z = imuRot.z;
