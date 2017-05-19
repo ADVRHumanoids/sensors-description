@@ -89,7 +89,7 @@ void MultiSenseSL::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
   std::vector<gazebo::physics::JointPtr> tempJoints = this->robotModel->GetJoints();
   for(int i = 0; i < tempJoints.size(); i++)
   {
-    gzerr << "Available Joints are: " << tempJoints[i]->GetName() << "\n";
+    gzdbg << "Available Joints are: " << tempJoints[i]->GetName() << "\n";
   }
 
   // Get sensors
