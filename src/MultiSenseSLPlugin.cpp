@@ -132,8 +132,11 @@ void MultiSenseSL::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     gzerr << "multicamera sensor not found\n";
 
   // get default frame rate
+#if GAZEBO_MAJOR_VERSION >= 8
+  this->multiCameraFrameRate = this->multiCameraSensor->UpdateRate();
+#else
   this->multiCameraFrameRate = this->multiCameraSensor->GetUpdateRate();
-
+#endif
 
   if (!sensors::SensorManager::Instance()->GetSensor("head_hokuyo_sensor"))
     gzerr << "laser sensor not found\n";
@@ -522,10 +525,22 @@ void MultiSenseSL::SetMultiCameraResolution(
 
   this->multiCameraSensor->SetUpdateRate(this->multiCameraFrameRate);
 
-  for (unsigned int i = 0; i < this->multiCameraSensor->GetCameraCount(); ++i)
+  int cc = 0;
+#if GAZEBO_MAJOR_VERSION >= 8
+  cc = this->multiCameraSensor->CameraCount();
+#else
+  cc = this->multiCameraSensor->GetCameraCount();
+#endif
+
+  for (unsigned int i = 0; i < cc; ++i)
   {
+#if GAZEBO_MAJOR_VERSION >= 8
+    this->multiCameraSensor->Camera(i)->SetImageWidth(width);
+    this->multiCameraSensor->Camera(i)->SetImageHeight(height);
+#else
     this->multiCameraSensor->GetCamera(i)->SetImageWidth(width);
     this->multiCameraSensor->GetCamera(i)->SetImageHeight(height);
+#endif
   }
 }
 
